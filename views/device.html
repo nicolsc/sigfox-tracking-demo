@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/scripts/device.js"></script>
+    <title>Sigfox - Device {{id}} history</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+  crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+ integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+ crossorigin=""></script>
+ <script type="text/javascript">
+    window.leafletToken = '{{leafletToken}}';
+  </script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <!-- Wide card with share menu button -->
+    <style>
+      #map{
+        height: 800px;
+      }
+      .mdl-card{
+        display: inline-block;
+        box-sizing: border-box;
+        vertical-align: middle;
+        margin: 0.5em;
+      }
+      .mdl-card h2{
+        display: block;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Device {{id}} - messages history</span>
+          <div class="mdl-layout-spacer"></div>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <div class="map-container">
+            <div id="map"></div>
+          </div>
+          <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+            <thead>
+              <tr>
+                <th colspan="2" class="mdl-data-table__cell--non-numeric">Date</th>
+                <th>Data</th>
+                <th>Reception info</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each messages}}
+                <tr>
+                  <td>{{dateStr}}</td>
+                  <td>{{fromNow}}</td>
+                  <td>{{data}}</td>
+                  <td>{{linkQuality}}</td>
+                </tr>
+              {{/each}}
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
