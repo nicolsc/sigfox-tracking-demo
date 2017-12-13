@@ -1,6 +1,6 @@
 # Sigfox device tracking
 
-Show on a map the position history of any sigfox device
+Show on a map the position history of any sigfox device, with a NodeJS/HAPI simple web server
 
 ![Screenshot](./docs/screenshot.png)
 
