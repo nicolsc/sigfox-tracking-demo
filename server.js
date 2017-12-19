@@ -64,6 +64,7 @@ var paginationCrawl = (reqOptions, limitEntries, fetched) => {
   return new Promise((resolve, reject) => {
     console.log(`Fetch ${reqOptions.uri}`);
     req.then(json => {
+      console.log(`Got ${json.data.length} entries`)
       json.data.forEach((item,idx) => {
         var momentdate = moment(item.time*1000);
         json.data[idx].dateStr = momentdate.format('lll');
@@ -72,7 +73,9 @@ var paginationCrawl = (reqOptions, limitEntries, fetched) => {
       var data = fetched.concat(json.data);
       if (!json.paging || !json.paging.next || data.length >= limitEntries){
         console.log(`😀  crawl over, ${data.length} entries`);
-        data.length = limitEntries;
+        if (data.length > limitEntries){
+          data.length = limitEntries;
+        }
         return resolve({data:data});
       }
       reqOptions.uri = json.paging.next;
@@ -125,7 +128,7 @@ console.log(request.query)
   .then(result => {
     if (!result || !result.data || !result.data.length){
       console.log('results', result)
-      return h.view('device', {id:request.params.id, messages:[], leafletToken:process.env.LEAFLET_TOKEN});
+      return h.response({id:request.params.id, messages:[]}).code(404);
     }
     console.log(`Device ${request.params.id} - Got ${result.data.length} messages`);
     return h.response({id:request.params.id, messages:result.data});
